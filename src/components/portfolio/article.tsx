@@ -13,7 +13,6 @@ export interface articleProps {
     _id: string;
     _createdAt: string;
 }
-const [articles, setArticles] = useState([]);
 async function getData() {
     const query = `*[_type == 'article']`;
     const data = await client.fetch(query);
@@ -27,9 +26,6 @@ const Article = () => {
         const fetchData = async () => {
             const res = await getData();
             setArticles(res);
-            /*const query = `*[_type == 'article']`;
-            const res = client.fetch(query);
-            setArticles(res);*/
         }
         fetchData();
     }, []
