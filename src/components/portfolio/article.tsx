@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { client } from "@/utils/configSanity";
+import Card from "../card";
 
 export interface articleProps {
     title: string;
@@ -10,29 +11,29 @@ export interface articleProps {
     text: string;
     date: string;
     main: boolean;
-    _id: string;
-    _createdAt: string;
 }
-async function getData() {
+/*async function getData() {
     const query = `*[_type == 'article']`;
-    const data = await client.fetch(query);
-    return data as articleProps[];
-}
+    const res = await client.fetch(query);
+    return res as articleProps[];
+}*/
 
 const Article = () => {
     const [articles, setArticles] = useState<articleProps[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await getData();
-            setArticles(res);
+            //const res = await getData();
+            const query = `*[_type == 'article']`;
+            const res = await client.fetch(query);
+            setArticles(res); //postupne nastavit pomoci cyklu a u picture vytahnout url
         }
         fetchData();
     }, []
     );
 
-    console.log(articles);
+    //console.log(articles);
 
-    return <div>Article</div>
+    return (articles.map((article) => <Card title={article.title} author={article.author} picture={article.picture} category={article.category} intro={article.intro} text={article.text} main={article.main} date={article.date}/>))
 };
 export default Article;
