@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { client } from "@/utils/configSanity";
 import Card from "../card";
+import imageUrlBuilder from '@sanity/image-url'
 
 export interface articleProps {
     title: string;
@@ -18,6 +19,13 @@ export interface articleProps {
     return res as articleProps[];
 }*/
 
+
+const builder = imageUrlBuilder(client)
+
+function urlFor(source:any) {
+  return builder.image(source)
+}
+
 const Article = () => {
     const [articles, setArticles] = useState<articleProps[]>([]);
 
@@ -26,7 +34,7 @@ const Article = () => {
             //const res = await getData();
             const query = `*[_type == 'article']`;
             const res = await client.fetch(query);
-            setArticles(res); //postupne nastavit pomoci cyklu a u picture vytahnout url
+            setArticles(res); 
         }
         fetchData();
     }, []
@@ -34,6 +42,6 @@ const Article = () => {
 
     //console.log(articles);
 
-    return (articles.map((article) => <Card title={article.title} author={article.author} picture={article.picture} category={article.category} intro={article.intro} text={article.text} main={article.main} date={article.date}/>))
+    return (articles.map((article) => <Card title={article.title} author={article.author} picture={urlFor(article.picture).url()} category={article.category} intro={article.intro} text={article.text} main={article.main} date={article.date}/>))
 };
 export default Article;
