@@ -4,6 +4,11 @@ export default {
     title: 'Article',
     fields: [
       {
+        name: 'id',
+        type: 'string',
+        title: 'id'
+      },
+      {
         name: 'title',
         type: 'string',
         title: 'Title'

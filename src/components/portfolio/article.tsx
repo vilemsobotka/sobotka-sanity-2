@@ -4,6 +4,7 @@ import Card from "../card";
 import imageUrlBuilder from '@sanity/image-url'
 
 export interface articleProps {
+    id: string;
     title: string;
     picture: string;
     author: string;
@@ -42,6 +43,6 @@ const Article = () => {
 
     //console.log(articles);
 
-    return (articles.map((article) => <Card title={article.title} author={article.author} picture={urlFor(article.picture).url()} category={article.category} intro={article.intro} text={article.text} main={article.main} date={article.date}/>))
+    return (articles.map((article) => <Card id={article.id} title={article.title} author={article.author} picture={urlFor(article.picture).url()} category={article.category} intro={article.intro} text={article.text} main={article.main} date={article.date}/>))
 };
 export default Article;
